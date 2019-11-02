@@ -3,15 +3,15 @@ Prerequisites:
 2. Install HELM with (for MacOs `brew install kubernetes-helm`)
 3. Add namespace to Kubernetes:
    ```shell script
-   kubectl create -f jenkins-namespace.yaml
+   kubectl create -f yaml/jenkins-namespace.yaml
    ```
 4. Create persistent volume for Jenkins;
     ```shell script
-    kubectl create -f jenkins-volume.yaml
+    kubectl create -f yaml/jenkins-volume.yaml
     ```
 5. Create persistent volume claim for Jenkins:
     ```shell script
-   kubectl create -f jenkins-pvc.yaml
+   kubectl create -f yaml/jenkins-pvc.yaml
     ```
 6. Init HELM with `helm init`
 7. Run following: 
