@@ -10,33 +10,21 @@ pipeline {
         }
         stage('Verify') {
             parallel {
-                stage ('Spotbugs main') {
+                stage ('Spotbugs') {
                     steps {
                         sh './gradlew spotbugsMain'
-                    }
-                }
-                stage ('Spotbugs test') {
-                    steps {
                         sh './gradlew spotbugsTest'
                     }
                 }
-                stage ('Checkstyle main') {
+                stage ('Checkstyle') {
                     steps {
                         sh './gradlew checkstyleMain'
-                    }
-                }
-                stage ('Checkstyle test') {
-                    steps {
                         sh './gradlew checkstyleTest'
                     }
                 }
-                stage ('PMD main') {
+                stage ('PMD') {
                     steps {
                         sh './gradlew pmdMain'
-                    }
-                }
-                stage ('PMD test') {
-                    steps {
                         sh './gradlew pmdTest'
                     }
                 }
@@ -44,7 +32,7 @@ pipeline {
         }
         stage('Test') {
             steps {
-                echo 'Testing...'
+                sh './gradlew test'
             }
         }
         stage('Deploy') {
