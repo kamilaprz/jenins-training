@@ -4,47 +4,31 @@ pipeline {
     stages {
         stage ('Compile') {
             steps {
-                sh './gradlew compileJava'
-                sh './gradlew compileTestJava'
+                sh './gradlew compileJava compileTestJava'
             }
         }
         stage('Verify') {
             parallel {
-                stage ('Spotbugs main') {
+                stage ('Spotbugs') {
                     steps {
-                        sh './gradlew spotbugsMain'
+                        sh './gradlew spotbugsMain spotbugsTest'
                     }
                 }
-                stage ('Spotbugs test') {
+                stage ('Checkstyle') {
                     steps {
-                        sh './gradlew spotbugsTest'
+                        sh './gradlew checkstyleMain checkstyleTest'
                     }
                 }
-                stage ('Checkstyle main') {
+                stage ('PMD') {
                     steps {
-                        sh './gradlew checkstyleMain'
-                    }
-                }
-                stage ('Checkstyle test') {
-                    steps {
-                        sh './gradlew checkstyleTest'
-                    }
-                }
-                stage ('PMD main') {
-                    steps {
-                        sh './gradlew pmdMain'
-                    }
-                }
-                stage ('PMD test') {
-                    steps {
-                        sh './gradlew pmdTest'
+                        sh './gradlew pmdMain pmdTest'
                     }
                 }
             }
         }
         stage('Test') {
             steps {
-                echo 'Testing...'
+                sh './gradlew test'
             }
         }
         stage('Deploy') {
