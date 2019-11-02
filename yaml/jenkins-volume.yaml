@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+ name: jenkins-pv
+ namespace: devops
+spec:
+ storageClassName: ""
+ accessModes:
+   - ReadWriteOnce
+   - ReadWriteMany
+ capacity:
+   storage: 10Gi
+ persistentVolumeReclaimPolicy: Retain
+ hostPath:
+   path: /data/jenkins-volume/
