@@ -1,0 +1,23 @@
+plugins {
+    id 'java'
+    id 'groovy'
+    id "com.github.spotbugs" version "2.0.1"
+    id 'pmd'
+    id 'checkstyle'
+    id "net.ltgt.errorprone" version "1.1.1"
+}
+
+group 'jenkins'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.5.8', ext: 'pom'
+
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
