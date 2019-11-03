@@ -9,11 +9,6 @@ pipeline {
         }
         stage('Verify') {
             parallel {
-                stage ('Spotbugs') {
-                    steps {
-                        sh './gradlew spotbugsMain spotbugsTest'
-                    }
-                }
                 stage ('Checkstyle') {
                     steps {
                         sh './gradlew checkstyleMain checkstyleTest'
