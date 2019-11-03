@@ -1,7 +1,5 @@
 package jobs
 
-import org.apache.tools.ant.Project
-
 /**
  * Created by Kamila Przychodzeń, kamila.przychodzen@gmail.com on 2019-11-03.
  */
@@ -14,8 +12,12 @@ class ProjectRunner {
     ]
 
     void generateJobs(parentJob, projects) {
+        printf 'Inside generateJobs method'
         projects.each({ project ->
+            printf 'processing ' + project.name + ' of type ' + project.base
+
             if (project instanceof ParallelExecutionProject) {
+                printf 'Generate pipeline for ParallelExecutionProject'
                 parentJob.pipelineJob(project.name) {
                     parameters {
                         stringParam("jobName", project.name)
@@ -23,7 +25,6 @@ class ProjectRunner {
                     definition {
                         cps {
                             script(
-                                    sandbox(),
                                     readFileFromWorkspace('JenkinsParallelPipeline.groovy')
                             )
                         }
@@ -34,7 +35,6 @@ class ProjectRunner {
                     definition {
                         cps {
                             script(
-                                    sandbox(),
                                     readFileFromWorkspace('JenkinsSequentialPipeline.groovy')
                             )
                         }
