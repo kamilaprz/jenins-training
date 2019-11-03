@@ -6,5 +6,5 @@ def projects = {
 }
 
 
-printf 'Start processing'
+out.println('Start processing')
 new ProjectRunner().generateJobs(this, projects);
