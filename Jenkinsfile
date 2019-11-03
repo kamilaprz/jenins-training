@@ -4,19 +4,24 @@ pipeline {
     stages {
         stage ('Compile') {
             steps {
-                sh './gradlew compileJava compileTestJava'
+                sh './gradlew compileJava compileTestJava --no-daemon'
             }
         }
         stage('Verify') {
             parallel {
                 stage ('Checkstyle') {
                     steps {
-                        sh './gradlew checkstyleMain checkstyleTest'
+                        sh './gradlew checkstyleMain checkstyleTest --no-daemon'
                     }
                 }
                 stage ('PMD') {
                     steps {
-                        sh './gradlew pmdMain pmdTest'
+                        sh './gradlew pmdMain pmdTest --no-daemon'
+                    }
+                }
+                stage ('Spotbugs') {
+                    steps {
+                        sh './gradlew spotbugsMain spotbugsTest --no-daemon'
                     }
                 }
             }
