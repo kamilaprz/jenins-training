@@ -33,9 +33,7 @@ class ProjectRunner {
                     }
                     definition {
                         cps {
-                            script(
-                                    readFileFromWorkspace('JenkinsParallelPipeline.groovy')
-                            )
+                            script(readFile('src/main/groovy/jobs/JenkinsParallelPipeline.groovy'))
                         }
                     }
                 }
@@ -43,16 +41,14 @@ class ProjectRunner {
                 parentJob.pipelineJob("${project.name}") {
                     definition {
                         cps {
-                            script(
-                                    readFileFromWorkspace('JenkinsSequentialPipeline.groovy')
-                            )
+                            script(readFile('JenkinsSequentialPipeline.groovy'))
                         }
                     }
                 }
             }
 
         })
-    }
+    };
 
     def project(Map<String, Object> inputs, Closure configurationClosure = null) {
         println('Inside project [name: ' + inputs['name']+ '] [base: '+ inputs['base'] + ']')
