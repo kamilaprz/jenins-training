@@ -42,6 +42,7 @@ class ProjectRunner {
     stages {
         stage ('Compile') {
             steps {
+                git credentialsId: '2432f028-6729-49f3-9186-7454a0e99a1a', url: 'https://github.com/kamilaprz/jenins-training\'
                 echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
                 echo './gradlew compileJava compileTestJava --no-daemon\'
             }
