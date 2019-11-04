@@ -88,7 +88,7 @@ class ProjectRunner {
                 parentJob.pipelineJob("${project.name}") {
                     definition {
                         cps {
-                            script(readFile('JenkinsSequentialPipeline.groovy'))
+                            script("echo 'Sequential build'")
                         }
                     }
                 }
