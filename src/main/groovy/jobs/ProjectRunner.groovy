@@ -14,7 +14,7 @@ class ProjectRunner {
 
     void generateJobs(JobParent parentJob, Closure projectsClosure = null) {
         // println will output to std-out, what we want is to print to Jenkins' console which is the this:
-        def output = jobParent.getJm().getOutputStream()
+        def output = parentJob.getJm().getOutputStream()
 
         output.println('Inside generateJobs method')
         projectsClosure.setDelegate(this)
