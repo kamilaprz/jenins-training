@@ -12,12 +12,12 @@ class ProjectRunner {
     ]
 
     void generateJobs(parentJob, projects) {
-        out.println('Inside generateJobs method')
+        println('Inside generateJobs method')
         projects.each({ project ->
             printf 'processing ' + project.name + ' of type ' + project.base
 
             if (project instanceof ParallelExecutionProject) {
-                out.println('Generate pipeline for ParallelExecutionProject')
+                println('Generate pipeline for ParallelExecutionProject')
                 parentJob.pipelineJob(project.name) {
                     parameters {
                         stringParam("jobName", project.name)
