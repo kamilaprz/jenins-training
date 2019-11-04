@@ -67,7 +67,7 @@ class ProjectRunner {
         }
         stage('Test') {
             steps {
-                 sh ./gradlew test --no-daemon
+                 sh './gradlew test --no-daemon\'
             }
         }
         stage('Deploy') {
