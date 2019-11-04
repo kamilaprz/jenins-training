@@ -1,6 +1,7 @@
 package jobs
 
 import javaposse.jobdsl.dsl.JobParent
+
 /**
  * Created by Kamila Przychodzeń, kamila.przychodzen@gmail.com on 2019-11-03.
  */
@@ -20,7 +21,7 @@ class ProjectRunner {
         projectsClosure.setDelegate(this)
         projectsClosure()
 
-        output.println('Projects to process: '+ projects.size())
+        output.println('Projects to process: ' + projects.size())
         projects.each({ project ->
             output.println("Project processing " + project.toString())
             printf 'processing ' + project.name + ' of type ' + project.base
@@ -33,7 +34,53 @@ class ProjectRunner {
                     }
                     definition {
                         cps {
-                            script(readFile('src/main/groovy/jobs/JenkinsParallelPipeline.groovy'))
+                            script(
+                                    '''
+                                               pipeline {
+    agent any
+
+    stages {
+        stage ('Compile') {
+            steps {
+                echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
+                echo './gradlew compileJava compileTestJava --no-daemon\'
+            }
+        }
+        stage('Verify') {
+            parallel {
+                stage ('Checkstyle') {
+                    steps {
+                        echo './gradlew checkstyleMain checkstyleTest --no-daemon\'
+                    }
+                }
+                stage ('PMD') {
+                    steps {
+                        echo './gradlew pmdMain pmdTest --no-daemon\'
+                    }
+                }
+                stage ('Spotbugs') {
+                    steps {
+                        echo './gradlew spotbugsMain spotbugsTest --no-daemon\'
+                    }
+                }
+            }
+        }
+        stage('Test') {
+            steps {
+                echo './gradlew test --no-daemon\'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying....\'
+            }
+        }
+    }
+}
+
+                                    '''
+
+                            )
                         }
                     }
                 }
@@ -51,7 +98,7 @@ class ProjectRunner {
     };
 
     def project(Map<String, Object> inputs, Closure configurationClosure = null) {
-        println('Inside project [name: ' + inputs['name']+ '] [base: '+ inputs['base'] + ']')
+        println('Inside project [name: ' + inputs['name'] + '] [base: ' + inputs['base'] + ']')
         def name = inputs['name']
         def base = inputs['base']
         // ?: Is the specified base a valid basetype?
