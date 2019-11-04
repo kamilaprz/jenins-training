@@ -14,6 +14,7 @@ class ProjectRunner {
     void generateJobs(parentJob, projects) {
         println('Inside generateJobs method')
         projects.each({ project ->
+            println("Project processing " + project.toString())
             printf 'processing ' + project.name + ' of type ' + project.base
 
             if (project instanceof ParallelExecutionProject) {
