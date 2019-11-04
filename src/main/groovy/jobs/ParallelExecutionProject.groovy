@@ -5,7 +5,7 @@ package jobs
  */
 class ParallelExecutionProject extends Project {
     ParallelExecutionProject(String name) {
-        super.name = name;
-        super.base = 'ParallelExecutionProject'
+        this.name = name;
+        this.base = 'ParallelExecutionProject'
     }
 }
