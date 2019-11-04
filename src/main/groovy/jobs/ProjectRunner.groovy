@@ -20,6 +20,7 @@ class ProjectRunner {
         projectsClosure.setDelegate(this)
         projectsClosure()
 
+        output.println('Projects to process: '+ projects.size())
         projects.each({ project ->
             output.println("Project processing " + project.toString())
             printf 'processing ' + project.name + ' of type ' + project.base
@@ -54,6 +55,7 @@ class ProjectRunner {
     }
 
     def project(Map<String, Object> inputs, Closure configurationClosure = null) {
+        println('Inside project [name: ' + inputs['name']+ '] [base: '+ inputs['base'] + ']')
         def name = inputs['name']
         def base = inputs['base']
         // ?: Is the specified base a valid basetype?
