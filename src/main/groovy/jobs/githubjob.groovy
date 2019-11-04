@@ -1,3 +1,5 @@
+package jobs
+
 import jobs.ProjectRunner
 
 def projects = {
