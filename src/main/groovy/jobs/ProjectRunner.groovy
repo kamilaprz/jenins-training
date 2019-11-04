@@ -1,5 +1,6 @@
 package jobs
 
+import javaposse.jobdsl.dsl.JobParent
 /**
  * Created by Kamila Przychodzeń, kamila.przychodzen@gmail.com on 2019-11-03.
  */
@@ -11,7 +12,7 @@ class ProjectRunner {
             'SequentialExecutionProject': { name -> new SequentialExecutionProject(name) }
     ]
 
-    void generateJobs(ParentJob parentJob, Clousure projectsClosure = null) {
+    void generateJobs(JobParent parentJob, Closure projectsClosure = null) {
         // println will output to std-out, what we want is to print to Jenkins' console which is the this:
         def output = jobParent.getJm().getOutputStream()
 
