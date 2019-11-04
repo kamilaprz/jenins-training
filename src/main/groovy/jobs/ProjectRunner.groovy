@@ -11,14 +11,20 @@ class ProjectRunner {
             'SequentialExecutionProject': { name -> new SequentialExecutionProject(name) }
     ]
 
-    void generateJobs(parentJob, projects) {
-        println('Inside generateJobs method')
+    void generateJobs(ParentJob parentJob, Clousure projectsClosure = null) {
+        // println will output to std-out, what we want is to print to Jenkins' console which is the this:
+        def output = jobParent.getJm().getOutputStream()
+
+        output.println('Inside generateJobs method')
+        projectsClosure.setDelegate(this)
+        projectsClosure()
+
         projects.each({ project ->
-            println("Project processing " + project.toString())
+            output.println("Project processing " + project.toString())
             printf 'processing ' + project.name + ' of type ' + project.base
 
-            if (project instanceof ParallelExecutionProject) {
-                println('Generate pipeline for ParallelExecutionProject')
+            if (project.base == 'ParallelExecutionProject') {
+                output.println('Generate pipeline for ParallelExecutionProject')
                 parentJob.pipelineJob(project.name) {
                     parameters {
                         stringParam("jobName", project.name)
@@ -31,7 +37,7 @@ class ProjectRunner {
                         }
                     }
                 }
-            } else if (project instanceof SequentialExecutionProject) {
+            } else if (project.base == 'SequentialExecutionProject') {
                 parentJob.pipelineJob("${project.name}") {
                     definition {
                         cps {
