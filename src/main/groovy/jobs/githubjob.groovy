@@ -9,4 +9,5 @@ def projects = {
 out.println('Start processing')
 new ProjectRunner().generateJobs(this, projects);
 
+
 return this
