@@ -5,7 +5,7 @@ package jobs
  */
 class SequentialExecutionProject extends Project {
     SequentialExecutionProject(String name) {
-        super.name = name;
-        super.base = 'SequentialExecutionProject'
+        this.name = name;
+        this.base = 'SequentialExecutionProject'
     }
 }
